@@ -1,0 +1,40 @@
+#map {
+    height: 400px;
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-top: 16px;
+  }
+/* الخلفية بالصورة */
+.background-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    z-index: 0; /* تأكد أن الخلفية خلف كل العناصر */
+  }
+  
+  /* الطبقة الشفافة (Overlay)
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* شفافية 50% */
+    /* z-index: 1; تجعلها فوق الخلفية */
+  /* } */ */
+  
+  /* تأكد من أن المحتوى في الأمام */
+  .card {
+    position: relative;
+    z-index: 2;
+  }
+  
+ 
+  

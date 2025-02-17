@@ -1,0 +1,38 @@
+/* خلفية القمر الصناعي */
+.login-container {
+    background: url('/images/img2.webp') no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+  }
+  
+  /* تنسيق الفورم */
+  .form-card {
+    padding: 2rem;
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    background: url('/images/img3.avif') no-repeat center center;
+    background-size: cover;
+    backdrop-filter: blur(4px); /* تأثير الزجاج المموه */
+    background-color: rgba(255, 255, 255, 0.1); /* خلفية نصف شفافة */
+    color: white;
+  }
+  
+  h3 {
+    color: #333;
+  }
+  
+  label {
+    color: #444;
+  }
+  
+  .btn {
+   background-color: #444;
+    color: white;
+    border: none;
+  }
+  
+  .btn:hover {
+    background-color: #a7b2be;
+  }
+  
