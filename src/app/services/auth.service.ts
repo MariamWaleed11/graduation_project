@@ -8,12 +8,12 @@ import { Observable } from 'rxjs';
 
 
 export class AuthService {
-  baseUrl = 'http://127.0.0.1:8000/api'; 
+  baseUrl = 'http://127.0.0.1:8000/api';
 
   constructor(private http: HttpClient) {}
 
   login(obj: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}login`,obj,);
+    return this.http.post(`${this.baseUrl}/login`,obj,);
   }
 
   saveToken(token: string) {

@@ -7,7 +7,7 @@
       </button>
       <div class="px-5 fs-5  " id="navbarNavDropdown">
         <ul class="navbar-nav ">
-        
+
           <li class="nav-item">
             <a class="nav-link btn btn-outline-secondary text-white me-2 fw-bold "  routerLink="telemetry" routerLinkActive="active">Telemetry</a>
           </li>
@@ -17,12 +17,17 @@
           <li class="nav-item">
             <a class="nav-link btn btn-outline-secondary text-white me-2  fw-bold" routerLink="payload" routerLinkActive="active">Payload</a>
           </li>
-        
-          <a class="nav-link ms-1" routerLink="login" routerLinkActive="active"  >
+
+
+          <a *ngIf="!global.isAuth" class="nav-link ms-1" routerLink="login" routerLinkActive="active"  >
             <i class="fa-solid fa-right-to-bracket fa-lg" style="color: #ffffff;"></i>
           </a>
-       
-          
+
+          <a *ngIf="global.isAuth" class="nav-link ms-1" (click)="logout()" role="button" >
+            <i class="fa-solid fa-right-from-bracket fa-lg" style="color: #ffffff;"></i>
+          </a>
+
+
         </ul>
       </div>
     </div>
