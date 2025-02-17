@@ -1,29 +1,25 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from "@angular/forms";
-
-import { Router } from "@angular/router";
-import { AuthService } from "../../services/auth.service";
-import { HttpClient } from '@angular/common/http';
-import { GlobalService } from '../../global.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 import Swal from 'sweetalert2';
-
+import { NgIf } from '@angular/common';
+import { Router } from '@angular/router';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-login',
-  standalone: false,
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  imports: [
+    ReactiveFormsModule,
+    NgIf
+  ],
+  styleUrls: ['./login.component.css']
 })
-  export class LoginComponent {
-    loginForm: FormGroup;
+export class LoginComponent {
+  loginForm: FormGroup;
   isSubmitted = false;
-  loginData = {
-    email: '',
-    password: ''
-  };
 
-  constructor(private authService: AuthService ,private fb: FormBuilder) {
-
+  constructor(private authService: AuthService, private fb: FormBuilder, private router: Router,private global:GlobalService ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
@@ -32,28 +28,37 @@ import Swal from 'sweetalert2';
 
   handleSubmit() {
     this.isSubmitted = true;
-    this.authService.login(this.loginData).subscribe({
-    next: (response: any) => {
-      if (response.token) {
-        this.authService.saveToken(response.token); // حفظ الرمز المميز
+
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched(); // Ensures validation messages appear
+      return;
+    }
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (response: any) => {
+        if (response.token) {
+          this.authService.saveToken(response.token);
+          this.global.isAuth = true;
+          Swal.fire({
+            icon: 'success',
+            title: 'Login Successful!',
+            text: 'Welcome back!',
+            timer: 1500, // Auto-close after 1.5 seconds
+            showConfirmButton: false
+          }).then(() => {
+            this.router.navigateByUrl('/'); // ✅ Now it works
+          });
+        }
+      },
+      error: () => {
         Swal.fire({
-          icon: 'success',
-          title: 'Login Successful!',
-          text: 'Welcome back!',
-          confirmButtonColor: '#3085d6'
+          icon: 'error',
+          title: 'Login Failed',
+          text: 'Invalid email or password. Please try again.',
+          timer: 1500, // Auto-close after 1.5 seconds
+          showConfirmButton: false
         });
       }
-    },
-    error: (err) => {
-      Swal.fire({
-        icon: 'error',
-        title: 'Login Failed',
-        text: 'Invalid email or password. Please try again.',
-        confirmButtonColor: '#d33'
-      });
-    }
-  });
-
-      
-  
-  }}
+    });
+  }
+}

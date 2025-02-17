@@ -15,7 +15,7 @@ const routes: Routes = [
   {path:'control',component:ControlComponent ,canActivate:[authGuard]},
   {path:'payload',component:PayloadComponent ,canActivate:[authGuard] },
   {path:'login',component:LoginComponent ,canActivate:[guestGuard]}
-  
+
 ];
 
 @NgModule({

@@ -1,36 +1,32 @@
+<div class="login-container">
+  <div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="card p-4 form-card">
+      <h3 class="text-center mb-4 text-white">Login</h3>
+      <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+        <div class="mb-3">
+          <label for="email" class="form-label text-white">Email address</label>
+          <input type="email" class="form-control" formControlName="email"
+                 id="email" name="email" placeholder="Enter your email" required />
+          <span class="text-danger" *ngIf="isSubmitted && loginForm.get('email')?.invalid">
+            <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+            <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</span>
+          </span>
+        </div>
 
-  <div class="login-container">
-    <div class="d-flex justify-content-center align-items-center vh-100">
-      <div class="card p-4 form-card ">
-        <h3 class="text-center mb-4 text-white"> Login</h3>
-        <form  [formGroup]="loginForm" (ngSubmit)="handleSubmit()" >
-          <div class="mb-3">
-            <label for="email" class="form-label text-white">Email address</label>
-            <input type="email" class="form-control" formControlName="email"
-              id="email" name="email" placeholder="Enter your email" required
-             
-            />
-            <span class="text-danger" *ngIf="isSubmitted && loginForm.controls['email'].invalid">
-                <span *ngIf="loginForm.controls['email'].errors?.['required']">Email is required</span>
-                <span *ngIf="loginForm.controls['email'].errors?.['email']">Invalid email format</span>
-              </span>
-          </div>
-          <div class="mb-3">
-            <label for="password" class="form-label text-white">Password</label>
-            <input type="password" class="form-control" formControlName="password"
-              id="password" name="password" placeholder="Enter your password" required
-         
-            />
-            <span class="text-danger" *ngIf="isSubmitted && loginForm.controls['password'].invalid">
-                <span *ngIf="loginForm.controls['password'].errors?.['required']">Password is required</span>
-                <span *ngIf="loginForm.controls['password'].errors?.['minlength']">
-                  Password must be at least 6 characters long
-                </span>
-              </span>
-          </div>
-          <button type="submit" class="btn btn-dark w-100">Login</button>
-        </form>
-      </div>
+        <div class="mb-3">
+          <label for="password" class="form-label text-white">Password</label>
+          <input type="password" class="form-control" formControlName="password"
+                 id="password" name="password" placeholder="Enter your password" required />
+          <span class="text-danger" *ngIf="isSubmitted && loginForm.get('password')?.invalid">
+            <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+            <span *ngIf="loginForm.get('password')?.errors?.['minlength']">
+              Password must be at least 6 characters long
+            </span>
+          </span>
+        </div>
+
+        <button type="submit" class="btn btn-dark w-100">Login</button>
+      </form>
     </div>
   </div>
-  
+</div>
