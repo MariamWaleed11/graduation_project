@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Type } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -19,6 +19,7 @@ export class AuthService {
   saveToken(token: string) {
     // تخزين الرمز المميز في Local Storage
     localStorage.setItem('authToken', token);
+    
   }
 
   getToken(): string | null {
@@ -34,6 +35,14 @@ export class AuthService {
   isAuthenticated(): boolean {
     // التحقق من وجود الرمز المميز
     return !!this.getToken();
+  }
+
+  getUsers(): Observable<any> {
+    return this.http.get(`${this.baseUrl}/users`);
+  }
+  
+  deleteUsers( id: any): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/users/${id}`)
   }
 }
 

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { GlobalService } from '../../services/global.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  constructor(public global: GlobalService) {}
+  constructor(public global: GlobalService,private route:Router) {}
 
   logout() {
     Swal.fire({
@@ -25,6 +26,7 @@ export class NavbarComponent {
       if (result.isConfirmed) {
         localStorage.removeItem('authToken');
         this.global.isAuth = false;
+        this.route.navigateByUrl('/')
         Swal.fire({
           icon: 'success',
           title: 'Logged Out',

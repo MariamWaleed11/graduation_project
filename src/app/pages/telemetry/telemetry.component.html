@@ -1,1 +1,234 @@
-<p>telemetry works!</p>
+
+<div class="container">
+
+<!-- <div class="row"> -->
+    <div class="topic">Telemetry</div>
+
+    <div class="content ">
+        <input type="radio" name="slider"  id="add" style="display: none;">
+        <input type="radio" name="slider" id="log" style="display: none;">
+        <input type="radio" name="slider" id="delete" style="display: none;">
+      
+
+        <div class="list col-md-3 ">
+          <div class=" dropdown">
+            <label for="view main parameter" class=" dropdown-toggle active " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <span>view main parameter</span>
+            </label>
+                  <ul class="dropdown-menu bg-secondary fs-6">  
+               <i><label >
+                <span>1</span></label></i>
+                 <i><label >
+                  <span>2</span></label></i>
+                <i><label >
+                 <span>3</span></label></i>
+                  </ul>
+            </div>
+
+            <div class=" dropdown">
+              <label  class=" dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span>view by subsystems</span>
+              </label>
+                    <ul class="dropdown-menu bg-secondary fs-6">  
+                 <i><label >
+                  <span>1</span></label></i>
+                   <i><label >
+                    <span>2</span></label></i>
+                  <i><label >
+                   <span>3</span></label></i>
+                    </ul>
+              </div>
+
+           
+            <div class=" dropdown">
+            <label for="management" class=" management dropdown-toggle " type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <span>Management</span>
+            </label>
+                  <ul class="dropdown-menu bg-secondary fs-6">  
+               <i><label for="add" class="add">
+                <span>Add</span></label></i>
+
+                 <i><label for="delete" class="delete">
+                  <span>Delete</span></label></i>
+
+                <i><label for="log" class="log">
+                 <span>Log</span></label></i>
+                  </ul>
+            </div>
+            
+            <div class="slider"></div>
+        </div>
+        
+        <div class="text-content">
+            <div class="add text ">
+              <div class="title "> Add User</div>
+            
+                <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()" class=" p-4 border rounded border-0 shadow-m bg-secondary">
+                  <div class="row">
+
+                    <div class="mb-3 col-md-5 me-4">
+                      <label for="fullName" class="form-label text-white fs-4">FullName</label>
+                      <input type="text" id="fullName" class="form-control h-50 fs-6" formControlName="fullName"
+                      name="FullName" placeholder="Enter your Name" required />
+                      <span class="text-danger" *ngIf="isSubmitted && loginForm.get('fullName')?.invalid">
+                        <span *ngIf="loginForm.get('fullName')?.errors?.['required']">FullName is required </span>
+                      </span>
+                    </div>
+
+                    <div class="mb-3 col-md-5 ms-4">
+                      <label for="role" class="form-label text-white fs-4">Role</label>
+                      <select id="role" class="form-select h-50 fs-6" formControlName="role"  required>
+                        <option value="admin" class="fs-5">Admin</option>
+                        <option value="User" class="fs-5">User</option>
+                      </select>
+                      <span class="text-danger" *ngIf="isSubmitted && loginForm.get('role')?.invalid">
+                        <span *ngIf="loginForm.get('role')?.errors?.['required']">role is required</span>
+                      </span>
+                    </div>
+
+
+                    <div class="mb-3 col-md-5 me-4">
+                      <label for="email" class="form-label text-white fs-4 ">User Name</label>
+                      <input type="email" class="form-control h-50 fs-6" formControlName="email"
+                             id="email" name="email" placeholder="Enter your username" required />
+                      <span class="text-danger" *ngIf="isSubmitted && loginForm.get('email')?.invalid">
+                        <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+                        <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</span>
+                      </span>
+                    </div>
+            
+                    <div class="mb-3 col-md-5 ms-4 ">
+                      <label for="password" class="form-label text-white fs-4 ">Password</label>
+                      <input type="password" class="form-control h-50" formControlName="password"
+                             id="password" name="password" placeholder="Enter your password" required />
+                      <span class="text-danger" *ngIf="isSubmitted && loginForm.get('password')?.invalid">
+                        <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+                        <span *ngIf="loginForm.get('password')?.errors?.['minlength']">
+                          Password must be at least 8 characters long
+                        </span>
+                      </span>
+                    </div>
+<!-- 
+                    <div class="mb-3 col-md-5 ">
+                      <label for="mission" class="form-label text-white fs-4">Mission</label>
+                      <select id="mission" class="form-select h-50 fs-6" formControlName="mission" required>
+                        <option value="Telemetry" class="fs-5">Telemetry</option>
+                        <option value="Control" class="fs-5">Control</option>
+                        <option value="Payload" class="fs-5">Payload</option>
+                      </select>
+                      <span class="text-danger" *ngIf="isSubmitted && loginForm.get('mission')?.invalid">
+                        <span *ngIf="loginForm.get('mission')?.errors?.['required']">mission is required</span>
+                      </span>
+                    </div> -->
+
+
+
+                   <div>
+                    <button type="submit" class="btn btn-dark w-25 fs-4 mt-4 ">Add</button>
+                  </div>
+                  </div>
+                  </form>
+           
+             
+            </div>
+
+            
+              <div class=" text delete ">
+                <div class="title" style="margin-left: 50px;" >Delete User  </div>
+              
+                <table class="table table-dark table-striped" style=" margin-left: 50px;">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let user of users">
+                      <td>{{ user.id }}</td>
+                      <td>{{ user.name }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.role }}</td>
+                      <td>
+                        <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+                      </td> 
+                    </tr>
+                   
+                   
+                  </tbody>
+                </table>
+
+              </div>
+              
+             
+               
+              
+         
+
+              <div class="log text ">
+               
+                <div class="title">User Logs</div>
+                <div class="container  d-flex">
+                <div class="row ">
+                  <div class="col-md-5 me-4 ">
+                <!-- Date Input -->
+                <input type="date" class="form-control mb-1 fs-4  ms-0 " [(ngModel)]="logDate" (change)="filterLogs()" placeholder="Select Date">
+                  </div>
+                  <div class="col-md-5"  style="margin-right: 5px;">
+                <!-- Name Search Input -->
+                <input type="text" class="form-control mb-1 fs-4 ms-0 " [(ngModel)]="logName" (keyup)="filterLogs()" placeholder="Search by Name">
+                  </div>
+                </div>
+              </div>
+                <!-- User Logs Table -->
+                <table class="table table-dark table-striped mt-3">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>User</th>
+                      <th>Action</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let log of filteredLogs">
+                      <td>{{ log.id }}</td>
+                      <td>{{ log.user }}</td>
+                      <td>{{ log.action }}</td>
+                      <td>{{ log.date | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+
+
+         
+               
+
+
+         
+        </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

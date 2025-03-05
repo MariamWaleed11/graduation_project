@@ -1,15 +1,61 @@
 <div  class=" container-fluid position-relative vh-100 d-flex justify-content-center align-items-center bg-container">
-<div class="background-image  "><img src="images/background2.webp"  ></div>
-
-<div class="overlay"></div>
+<div class="background-image  "><img src="images/home1.jpg"  ></div>
 
 
-<!-- المحتوى فوق الخلفية -->
-<!-- <div class="card p-4 shadow-lg text-white" style="width: 80%; max-width: 800px; background-color: rgba(0, 0, 0, 0.6);">
-    <h1 class="text-center mb-4">Satellite Tracking</h1>
-    <div id="map" style="height: 400px; border-radius: 8px;"></div>
 
-  </div> -->
+<!-- المحتوى فوق الخلفية  --> 
+
+<div class="container d-flex  ">
+
+  <div class="row g-4 " style="margin-top: 20%; margin-left: 6%;">
+    <div class="col  " >
+      <div class="card bg-transparent h-100 border-0 btn " routerLink='telemetry'> 
+        <i class="fa-solid fa-satellite fa-2xl card-img-top text-center mb-5 " style="font-size: 60px; margin-top: 20%; color: white; " ></i>
+        <div  class="stretched-link"></div>
+        <div class="card-body text-white" >
+          <h5 class="card-title fw-bold">Telemetry</h5>
+          <p class="card-text fs-6">The Telemetry Subsystem is essential for monitoring a satellite’s health, ensuring smooth operation, and transmitting key data to ground stations for analysis and control.</p>
+       
+        </div> 
+      </div>
+    </div>
+    <div class="col">
+      <div class="card bg-transparent h-100 border-0 btn  ">
+        <i class="fa-solid fa-screwdriver-wrench fa-2xl card-img-top text-center mb-5" style="font-size: 60px; margin-top: 20%; color: white;"></i> 
+       <a routerLink="control" class="stretched-link"></a>
+        <div class="card-body text-white">
+          <h5 class="card-title fw-bold">Control</h5>
+          <p class="card-text fs-6">The Control Subsystem ensures that the satellite maintains its correct orientation and orbit, allowing it to perform its mission effectively. It uses sensors to measure position, an onboard computer to process data, and actuators to make corrections.</p>
+        </div>
+      </div>
+    </div>
+   
+    <div class="col ">
+      <div class="card bg-transparent h-100 border-0 btn " routerLink="Payload" >
+        <!-- <img src="images/payload2.png" class="card-img-top " style="width: 80px; margin-left: 35%; margin-top: 30px;"> -->
+        <i class="fa-solid fa-camera-retro fa-2xl card-img-top text-center mb-5" style="font-size: 60px; margin-top: 20%; color: white;"></i>
+        <a routerLink="payload" class="stretched-link"></a>
+        <div class="card-body text-white">
+          <h5 class="card-title fw-bold">Payload</h5>
+          <p class="card-text fs-6">The Payload Subsystem is the core of a satellite’s mission, equipped with instruments to perform data collection, communication, imaging, or scientific research. It works alongside other subsystems, such as power, control, and telemetry, to achieve mission success.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="col ">
+      <div class="card bg-transparent h-100  border-0 btn button" routerLink="/progation"  >
+        <i class="fa-solid fa-tower-broadcast fa-2xl card-img-top text-center mb-5 " style="font-size: 60px; margin-top: 20%; color: white;"></i>
+        <a routerLink="progration" class="stretched-link"></a>
+        <div class="card-body text-white">
+          <h5 class="card-title fw-bold">Propagation</h5>
+          <p class="card-text fs-6 ">The Propagation Subsystem ensures effective signal transmission, reception, and processing in a satellite. It consists of antennas, amplifiers, transponders, and frequency management systems to enable reliable communication between space and Earth.</p>
+        </div>
+       
+      </div>
+    </div>
+
+  </div>
 </div>
 
 
@@ -71,32 +117,3 @@
 
 
 
-
-
-<!-- <div class="container mt-5">
-    <h1 class="text-center mb-4">Satellite Tracking</h1>
-  
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <!-- خريطة مع إطار Bootstrap -->
-        <!-- <div class="card shadow-lg rounded-3">
-          <div class="card-body p-0">
-            <div id="map" style="height: 400px; border-radius: 8px;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> --> 
-  <!-- <div class="text-center mt-3">
-    <button class="btn btn-primary" (click)="fetchSatellitePosition()">Update Location</button>
-  </div> -->
-  
-<!-- 
-  <div class="container-fluid vh-100 d-flex justify-content-center align-items-center bg-container">
-    <div class="card p-4 shadow-lg" style="width: 80%; max-width: 800px;">
-      <h1 class="text-center mb-4">Satellite Tracking</h1>
-      <div id="map" style="height: 400px; border-radius: 8px;"></div>
-     
-    </div>
-  </div> -->
-  
