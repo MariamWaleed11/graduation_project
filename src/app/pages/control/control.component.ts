@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import {Component} from '@angular/core';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
+import {GlobalService} from '../../services/global.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-control',
   standalone: false,
-  templateUrl: './control.component.html',
+  templateUrl:'./control.component.html',
   styleUrl: './control.component.css'
 })
 export class ControlComponent {
@@ -14,46 +16,107 @@ export class ControlComponent {
   isSubmitted = false;
   users: any[] = [];
   logs = [
-    { id: 1, user: 'Ahmed', action: 'Added User', date: '2025-03-04T14:23:45' },
-    { id: 2, user: 'Mohamed', action: 'Deleted User', date: '2025-03-03T10:15:30' }
+    {id: 1, user: 'Ahmed', action: 'Added User', date: '2025-03-04T14:23:45'},
+    {id: 2, user: 'Mohamed', action: 'Deleted User', date: '2025-03-03T10:15:30'}
   ];
   filteredLogs = [...this.logs];
   logDate: string = '';
   logName: string = '';
 
-  constructor(private fb: FormBuilder, private apiService: AuthService) {
+  constructor(private fb: FormBuilder, private apiService: AuthService, public global: GlobalService) {
+    console.log(this.global.user_role);
     this.loginForm = this.fb.group({
-      fullName: ['', Validators.required],
+      name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]],
+      password_confirmation: ['', Validators.required],
       role: ['', Validators.required]
-    });
+    }, { validator: this.passwordMatchValidator });
   }
+
+  passwordMatchValidator(formGroup: AbstractControl) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('password_confirmation')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  }
+
 
   ngOnInit() {
     this.fetchUsers();
   }
 
   fetchUsers() {
-    this.apiService.getUsers().subscribe(data => {
+    this.apiService.getUsers().subscribe((data) => {
       this.users = data;
     });
   }
 
   handleSubmit() {
     this.isSubmitted = true;
-    if (this.loginForm.valid) {
-      console.log(this.loginForm.value);
-    }
-  }
 
-  deleteUser(id: number) {
-    if (confirm('Are you sure you want to delete this user?')) {
-      this.apiService.deleteUsers(id).subscribe(() => {
-        this.users = this.users.filter(user => user.id !== id);
+    if (this.loginForm.valid) {
+      this.apiService.addUser(this.loginForm.value).subscribe({
+        next: (data) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'User added successfully.',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            this.loginForm.reset(); // Reset form
+            this.isSubmitted = false; // Reset validation state
+            this.users = data
+          });
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: err.error?.message || 'Something went wrong. Please try again later.',
+            confirmButtonText: 'OK'
+          });
+        }
       });
     }
   }
+  
+
+
+
+  deleteUser(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This user will be permanently deleted!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService.deleteUsers(id).subscribe({
+          next: (data ) => {
+            this.users = data
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'User has been deleted successfully.',
+              confirmButtonText: 'OK'
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: err.error?.message || 'Something went wrong. Please try again.',
+              confirmButtonText: 'OK'
+            });
+          }
+        });
+      }
+    });
+  }
+
 
   filterLogs() {
     this.filteredLogs = this.logs.filter(log =>
@@ -61,4 +124,18 @@ export class ControlComponent {
       (this.logName ? log.user.toLowerCase().includes(this.logName.toLowerCase()) : true)
     );
   }
+
+
+
+
+  selectedItem: string = 'Receive'; 
+
+  selectItem(item: string) {
+    this.selectedItem = item;
+  }
+  
+
+
+
+
 }

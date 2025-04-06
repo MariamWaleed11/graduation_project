@@ -1,38 +1,35 @@
 /* خلفية القمر الصناعي */
 .login-container {
-    background: url('/images/img2.webp') no-repeat center center fixed;
+    background: url('/images/2.jpg') no-repeat center center fixed;
     background-size: cover;
     height: 100vh;
   }
   
   /* تنسيق الفورم */
   .form-card {
+    margin-top: 30px;
     padding: 2rem;
-    width: 400px;
-    border-radius: 10px;
+    width: 300px;
+    height: 350px;
+    border-radius: 20px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    background: url('/images/img3.avif') no-repeat center center;
-    background-size: cover;
-    backdrop-filter: blur(4px); /* تأثير الزجاج المموه */
-    background-color: rgba(255, 255, 255, 0.1); /* خلفية نصف شفافة */
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(1px); /* تأثير الزجاج المموه */
     color: white;
   }
+
+
   
-  h3 {
-    color: #333;
-  }
-  
-  label {
-    color: #444;
-  }
+
   
   .btn {
-   background-color: #444;
+   background-color: #c83a3a;
     color: white;
     border: none;
+    margin-left: 60px;
   }
   
   .btn:hover {
-    background-color: #a7b2be;
+    background-color: #af3029;
   }
   

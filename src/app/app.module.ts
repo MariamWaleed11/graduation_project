@@ -3,7 +3,7 @@ import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 
 import {PagesComponent} from './pages/pages.component';
 import {TelemetryComponent} from './pages/telemetry/telemetry.component';
@@ -14,7 +14,8 @@ import {HomeComponent} from './home/home.component';
 import {FooterComponent} from './shared/footer/footer.component';
 import {LoginComponent} from './auth/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { ProgrationComponent } from './pages/progration/progration.component';
+import {AuthInterceptor} from './interceptors/auth.interceptor';
+
 
 
 
@@ -27,8 +28,8 @@ import { ProgrationComponent } from './pages/progration/progration.component';
     PayloadComponent,
     NavbarComponent,
     FooterComponent,
-    ProgrationComponent,
-  
+    
+
 
 
 
@@ -38,12 +39,16 @@ import { ProgrationComponent } from './pages/progration/progration.component';
     AppRoutingModule,
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule,
     LoginComponent,
+    FormsModule
+    
+
 
 
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor , multi: true },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

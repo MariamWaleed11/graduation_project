@@ -1,17 +1,17 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {AuthService} from '../../services/auth.service';
 import Swal from 'sweetalert2';
-import { NgIf } from '@angular/common';
-import { Router } from '@angular/router';
-import { GlobalService } from '../../services/global.service';
+import {NgIf} from '@angular/common';
+import {Router} from '@angular/router';
+import {GlobalService} from '../../services/global.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   imports: [
     ReactiveFormsModule
-],
+  ],
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
@@ -27,22 +27,20 @@ export class LoginComponent {
 
   handleSubmit() {
     this.isSubmitted = true;
-
     if (this.loginForm.invalid) {
       this.loginForm.markAllAsTouched(); // Ensures validation messages appear
       return;
     }
-
     this.authService.login(this.loginForm.value).subscribe({
       next: (response: any) => {
-        console.log(response);
-
         if (response.token) {
           this.authService.saveToken(response.token);
           this.global.isAuth = true;
-          this.global.type = response.user.role == 'admin' ? 'admin' : response.user.mission;
-          localStorage.setItem('type', this.global.type);
-         
+          this.global.user_mission = response.user.mission;
+          localStorage.setItem('user_mission', this.global.user_mission);
+          this.global.user_role = response.user.role;
+          localStorage.setItem('user_role', this.global.user_role);
+
           Swal.fire({
             icon: 'success',
             title: 'Login Successful!',
@@ -50,10 +48,7 @@ export class LoginComponent {
             timer: 1500, // Auto-close after 1.5 seconds
             showConfirmButton: false
           }).then(() => {
-            switch (this.global.type) {
-              case 'Progration':
-                this.router.navigateByUrl('/progration');
-                break;
+            switch (this.global.user_mission) {
               case 'Control':
                 this.router.navigateByUrl('/control');
                 break;
@@ -66,7 +61,7 @@ export class LoginComponent {
               default:
                 this.router.navigateByUrl('/');
             }
-            
+
           });
         }
       },

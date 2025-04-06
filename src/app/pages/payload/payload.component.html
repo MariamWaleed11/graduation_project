@@ -1,1 +1,165 @@
-<p>payload works!</p>
+<div class=" Control-continar">
+  <div class="row  ">
+    <div class="topic">Payload</div>
+    <div  class="content ">
+      <input type="radio" name="slider" id="add" style="display: none;">
+      <input type="radio" name="slider" id="log" style="display: none;">
+      <input type="radio" name="slider" id="delete" style="display: none;">
+      
+      <div *ngIf="global.user_role == 'admin'" class="list col-md-3 ">
+        <div class=" dropdown">
+          <label for="" class=" management dropdown-toggle " type="button"
+                 data-bs-toggle="dropdown" aria-expanded="false">
+            <span>Management</span>
+          </label>
+          <ul class="dropdown-menu bg-secondary fs-6">
+            <i><label for="add" class="add">
+              <span>Add</span></label></i>
+
+            <i><label for="delete" class="delete">
+              <span>Delete</span></label></i>
+
+            <i><label for="log" class="log">
+              <span>Log</span></label></i>
+          </ul>
+        </div>
+        <div class="slider"></div>
+      </div>
+
+
+      <div class="text-content col-md-8">
+        <div class="add text ">
+          <div class="title "> Add User</div>
+
+          <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()"
+                class="p-4 border rounded shadow-m bg-secondary">
+            <div class="row">
+              <div class="mb-3 col-md-4">
+                <label for="name" class="form-label text-white fs-4">Name</label>
+                <input type="text" id="name" class="form-control" formControlName="name"
+                       placeholder="Enter your name" required/>
+                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('name')?.invalid">
+        <span *ngIf="loginForm.get('name')?.errors?.['required']">Name is required</span>
+      </span>
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label for="email" class="form-label text-white fs-4">Email</label>
+                <input type="email" id="email" class="form-control" formControlName="email"
+                       placeholder="Enter your email" required/>
+                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('email')?.invalid">
+        <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+        <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email</span>
+      </span>
+              </div>
+
+              <div class="mb-3 col-md-4">
+                <label for="role" class="form-label text-white fs-4">Role</label>
+                <select id="role" class="form-select" formControlName="role" required>
+                  <option value="" disabled selected>Select User Role</option>
+                  <option value="admin" >Admin</option>
+                  <option value="user" >User</option>
+                </select>
+                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('role')?.invalid">
+        <span *ngIf="loginForm.get('role')?.errors?.['required']">Role is required</span>
+      </span>
+              </div>
+
+              <div class="mb-3 col-md-6">
+                <label for="password" class="form-label text-white fs-4">Password</label>
+                <input type="password" class="form-control" formControlName="password"
+                       id="password" placeholder="Enter your password" required/>
+                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('password')?.invalid">
+        <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+        <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</span>
+      </span>
+              </div>
+
+              <div class="mb-3 col-md-6">
+                <label for="password_confirmation" class="form-label text-white fs-4">Confirm Password</label>
+                <input type="password" class="form-control" formControlName="password_confirmation"
+                       id="password_confirmation" placeholder="Confirm your password" required/>
+                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('password_confirmation')?.invalid">
+        <span *ngIf="loginForm.get('password_confirmation')?.errors?.['required']">Confirm password is required</span>
+        <span *ngIf="loginForm.hasError('passwordMismatch')">Passwords do not match</span>
+      </span>
+              </div>
+
+              <div>
+                <button type="submit" class="btn btn-dark w-25 fs-4 mt-4">Add</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class=" text delete ">
+          <div class="title" style="margin-left: 50px;">Delete User</div>
+          <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of users">
+              <td>{{ user.id }}</td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.role }}</td>
+              <td>
+                <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+              </td>
+            </tr>
+
+
+            </tbody>
+          </table>
+
+        </div>
+        <div class="log text ">
+
+          <div class="title">User Logs</div>
+          <div class="container  d-flex">
+            <div class="row ">
+              <div class="col-md-5 me-4 ">
+                <!-- Date Input -->
+                <input type="date" class="form-control mb-1 fs-4  ms-0 " [(ngModel)]="logDate" (change)="filterLogs()"
+                       placeholder="Select Date">
+              </div>
+              <div class="col-md-5" style="margin-right: 5px;">
+                <!-- Name Search Input -->
+                <input type="text" class="form-control mb-1 fs-4 ms-0 " [(ngModel)]="logName" (keyup)="filterLogs()"
+                       placeholder="Search by Name">
+              </div>
+            </div>
+          </div>
+          <!-- User Logs Table -->
+          <table class="table table-dark table-striped mt-3">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>User</th>
+              <th>Action</th>
+              <th>Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let log of filteredLogs">
+              <td>{{ log.id }}</td>
+              <td>{{ log.user }}</td>
+              <td>{{ log.action }}</td>
+              <td>{{ log.date | date:'yyyy-MM-dd HH:mm:ss' }}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

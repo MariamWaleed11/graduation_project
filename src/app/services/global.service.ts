@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 
 @Injectable({
   providedIn: 'root'
@@ -6,7 +6,9 @@ import { Injectable } from '@angular/core';
 export class GlobalService {
 
   isAuth: boolean = !!localStorage.getItem('authToken');
-  type:string = localStorage.getItem('type') ?? ''
+  user_role: string = localStorage.getItem('user_role') ?? '';
+  user_mission: string = localStorage.getItem('user_mission') ?? '';
 
-  constructor() { }
+  constructor() {
+  }
 }

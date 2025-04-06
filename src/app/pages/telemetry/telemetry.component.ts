@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {AbstractControl, FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import {GlobalService} from '../../services/global.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-telemetry',
@@ -10,73 +12,119 @@ import { AuthService } from '../../services/auth.service';
   styleUrl: './telemetry.component.css'
 })
 export class TelemetryComponent {
-   selectedTab: string = 'home';
-  //  // الافتراضي الصفحة الرئيسية
+  selectedTab: string = 'add';
+  loginForm: FormGroup;
+  isSubmitted = false;
+  users: any[] = [];
+  logs = [
+    {id: 1, user: 'Ahmed', action: 'Added User', date: '2025-03-04T14:23:45'},
+    {id: 2, user: 'Mohamed', action: 'Deleted User', date: '2025-03-03T10:15:30'}
+  ];
+  filteredLogs = [...this.logs];
+  logDate: string = '';
+  logName: string = '';
 
-   loginForm: FormGroup;
-    isSubmitted = false;
-    users: any[] = [];
+  constructor(private fb: FormBuilder, private apiService: AuthService, public global: GlobalService) {
+    console.log(this.global.user_role);
+    this.loginForm = this.fb.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      password_confirmation: ['', Validators.required],
+      role: ['', Validators.required]
+    }, { validator: this.passwordMatchValidator });
+  }
 
-  
-    constructor(  private fb: FormBuilder, private router: Router ,private apiService: AuthService) {
-      this.loginForm = this.fb.group({
-        fullName: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(8)]],
-        role: ['', Validators.required],
-        // mission: ['', Validators.required],
+  passwordMatchValidator(formGroup: AbstractControl) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('password_confirmation')?.value;
+    return password === confirmPassword ? null : { passwordMismatch: true };
+  }
+
+
+  ngOnInit() {
+    this.fetchUsers();
+  }
+
+  fetchUsers() {
+    this.apiService.getUsers().subscribe((data) => {
+      this.users = data;
+    });
+  }
+
+  handleSubmit() {
+    this.isSubmitted = true;
+
+    if (this.loginForm.valid) {
+      this.apiService.addUser(this.loginForm.value).subscribe({
+        next: (data) => {
+          Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: 'User added successfully.',
+            confirmButtonText: 'OK'
+          }).then(() => {
+            this.loginForm.reset(); // Reset form
+            this.isSubmitted = false; // Reset validation state
+            this.users = data
+          });
+        },
+        error: (err) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: err.error?.message || 'Something went wrong. Please try again later.',
+            confirmButtonText: 'OK'
+          });
+        }
       });
     }
- 
-  
-    handleSubmit() {
-      this.isSubmitted = true;
-    
-    } 
- 
-    ngOnInit() {
-      this.fetchUsers();
-      this.filteredLogs = [...this.logs];
-    }
-  
-    fetchUsers() {
-      this.apiService.getUsers().subscribe(data => {
-        this.users = data;
-      });
-    }
-  
-    deleteUser(id: number) {
-      if (confirm("Are you sure you want to delete this user?")) {
-        this.apiService.deleteUsers(id).subscribe(() => {
-          this.users = this.users.filter(user => user.id !== id);
+  }
+
+
+
+
+  deleteUser(id: number) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'This user will be permanently deleted!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.apiService.deleteUsers(id).subscribe({
+          next: (data ) => {
+            this.users = data
+            Swal.fire({
+              icon: 'success',
+              title: 'Deleted!',
+              text: 'User has been deleted successfully.',
+              confirmButtonText: 'OK'
+            });
+          },
+          error: (err) => {
+            Swal.fire({
+              icon: 'error',
+              title: 'Error!',
+              text: err.error?.message || 'Something went wrong. Please try again.',
+              confirmButtonText: 'OK'
+            });
+          }
         });
       }
-    }
- 
+    });
+  }
 
-    logs: any[] = [
-      { id: 1, user: 'Ahmed', action: 'Added User', date: '2025-03-04T14:23:45' },
-      { id: 2, user: 'Mohamed', action: 'Deleted User', date: '2025-03-03T10:15:30' },
-      { id: 3, user: 'Sara', action: 'Updated Profile', date: '2025-03-04T16:40:20' },
-      { id: 4, user: 'Ali', action: 'Logged In', date: '2025-03-02T09:05:10' }
-    ];
-  
-    filteredLogs: any[] = [];
-    logDate: string = '';
-    logName: string = '';
-  
-    // ngOnInit() {
-    //   this.filteredLogs = [...this.logs]; // Copy logs on component load
-    // }
-  
-    filterLogs() {
-      this.filteredLogs = this.logs.filter(log => {
-        const logDateOnly = log.date.split('T')[0]; // Extract date without time
-        const matchesDate = this.logDate ? logDateOnly === this.logDate : true;
-        const matchesName = this.logName ? log.user.toLowerCase().includes(this.logName.toLowerCase()) : true;
-        return matchesDate && matchesName;
-      });
-    }
+
+  filterLogs() {
+    this.filteredLogs = this.logs.filter(log =>
+      (this.logDate ? log.date.includes(this.logDate) : true) &&
+      (this.logName ? log.user.toLowerCase().includes(this.logName.toLowerCase()) : true)
+    );
+  }
 }
 
 

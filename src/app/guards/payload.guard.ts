@@ -7,15 +7,15 @@ export const payloadGuard: CanActivateFn = (
   state: RouterStateSnapshot
 ): boolean => {
   const router = inject(Router);
-   const  userType = localStorage.getItem('type')??'';
-  
-     
-     if (userType=='admin' || userType=='Payload') {
+   const  userType = localStorage.getItem('user_mission')??'';
+
+
+     if (userType=='Payload') {
        return true;
    }
-   
-   
-     if (userType!== 'Payload' && userType !== 'admin') {
+
+
+     if (userType!== 'Payload') {
        Swal.fire({
          icon: 'warning',
          title: 'Access Denied',
@@ -26,8 +26,8 @@ export const payloadGuard: CanActivateFn = (
        })
        return false;
      }
-   
-   
+
+
      return true;
    };
-  
+

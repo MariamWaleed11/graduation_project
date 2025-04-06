@@ -19,7 +19,7 @@ export class AuthService {
   saveToken(token: string) {
     // تخزين الرمز المميز في Local Storage
     localStorage.setItem('authToken', token);
-    
+
   }
 
   getToken(): string | null {
@@ -38,11 +38,15 @@ export class AuthService {
   }
 
   getUsers(): Observable<any> {
-    return this.http.get(`${this.baseUrl}/users`);
+    return this.http.get(`${this.baseUrl}/getUsers`);
   }
-  
+
   deleteUsers( id: any): Observable<any> {
     return this.http.delete(`${this.baseUrl}/users/${id}`)
+  }
+
+  addUser(obj: any): Observable<any> {
+    return this.http.post(`${this.baseUrl}/register`, obj);
   }
 }
 

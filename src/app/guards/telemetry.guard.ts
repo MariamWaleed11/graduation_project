@@ -1,5 +1,5 @@
-import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import {inject} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot} from '@angular/router';
 import Swal from 'sweetalert2';
 
 export const telemetryGuard: CanActivateFn = (
@@ -7,26 +7,26 @@ export const telemetryGuard: CanActivateFn = (
   state: RouterStateSnapshot
 ): boolean => {
   const router = inject(Router);
-  const  userType = localStorage.getItem('type')??'';
+  const userType = localStorage.getItem('user_mission') ?? '';
 
-   
-   if (userType=='admin' || userType=='Telemetry') {
-     return true;
- }
- 
- 
-   if (userType!== 'Telemerty' && userType !== 'admin') {
-     Swal.fire({
-       icon: 'warning',
-       title: 'Access Denied',
-       text: 'You are not authorized to access this page.',
-       timer: 1000,
-       showConfirmButton: false,
-       allowOutsideClick: false,
-     })
-     return false;
-   }
- 
- 
-   return true;
- };
+
+  if (userType == 'Telemetry') {
+    return true;
+  }
+
+
+  if (userType !== 'Telemerty') {
+    Swal.fire({
+      icon: 'warning',
+      title: 'Access Denied',
+      text: 'You are not authorized to access this page.',
+      timer: 1000,
+      showConfirmButton: false,
+      allowOutsideClick: false,
+    })
+    return false;
+  }
+
+
+  return true;
+};

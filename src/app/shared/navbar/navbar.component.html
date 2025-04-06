@@ -1,29 +1,29 @@
 
-<nav class="navbar navbar-expand-lg  bg-dark py-1  " >
-    <div class="container-fluid">
-      <a class="navbar-brand fw-bold fs-2 text-white " href="#">MCC</a>
+<nav class="navbar navbar-expand-lg py-1 " >
+    <div class="container-fluid bg-transparent ">
+      <a class="navbar-brand logo ms-5 fw-bold text-xl fs-1 text-white "  > MCC</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="px-5 fs-5  " id="navbarNavDropdown">
-        <ul class="navbar-nav ">
+      <div class="px-5 " id="navbarNavDropdown">
+        <ul class="navbar-nav fs-4">
+          <li class="nav-item" >
+            <a class="nav-link text-white me-2 "  routerLink="" routerLinkActive="active" >Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link  text-white me-2 "  routerLink="telemetry" routerLinkActive="active">Telemetry</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white me-2 " routerLink="control" routerLinkActive="active">Control</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white me-5  "  routerLink="payload" routerLinkActive="active">Payload</a>
+          </li>
+         
 
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-secondary text-white me-2 fw-bold "  routerLink="telemetry" routerLinkActive="active">Telemetry</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-secondary text-white me-2 fw-bold" routerLink="control" routerLinkActive="active">Control</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-secondary text-white me-2  fw-bold" routerLink="payload" routerLinkActive="active">Payload</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link btn btn-outline-secondary text-white me-2  fw-bold" routerLink="progration" routerLinkActive="active">Propagation</a>
-          </li>
 
-
-          <a *ngIf="!global.isAuth" class="nav-link ms-1" routerLink="login" routerLinkActive="active"  >
-            <i class="fa-solid fa-right-to-bracket fa-lg" style="color: #ffffff;"></i>
+          <a *ngIf="!global.isAuth" class="nav-link ms-1  " routerLink="login" routerLinkActive="active"  >
+            <i class="fa-solid fa-right-to-bracket fa-lg " style="color: #ffffff; margin-right: 40px;"></i>
           </a>
 
           <a *ngIf="global.isAuth" class="nav-link ms-1" (click)="logout()" role="button" >
