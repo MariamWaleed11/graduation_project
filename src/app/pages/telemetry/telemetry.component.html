@@ -13,6 +13,7 @@
       <input type="radio" name="slider" id="payload" style="display: none;">
       <input type="radio" name="slider" id="OBC" style="display: none;">
       <input type="radio" name="slider" id="GPS" style="display: none;">
+      <input type="radio" name="slider" id="Analysis" style="display: none;">
       
 
 
@@ -35,11 +36,13 @@
         <div class=" dropdown">
           <label class=" dropdown-toggle " type="button" data-bs-toggle="dropdown"
                  aria-expanded="false">
-            <span>view by subsystems</span>
+            <span class ="list-span " [class.selected]="selectedItem === 'view by subsystems'" 
+            (click)="selectItem('view by subsystems')">view by subsystems</span>
           </label>
-          <ul class="dropdown-menu bg-secondary fs-6">
+          <ul class="dropdown-menu  fs-6"   
+           style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);">
             <li><label for="power" class="power">
-              <span>Power</span></label></li>
+              <span >Power</span></label></li>
             <li><label for="telemetry" class="telemetry">
               <span>Telemetry</span></label></li>
             <li><label for="communications" class="communications">
@@ -56,28 +59,34 @@
           </ul>
         </div>
 
-        <div class=" dropdown">
-          <label  class=" dropdown-toggle  " type="button"
-                 data-bs-toggle="dropdown" aria-expanded="false">
-            <span >Analysis</span>
+        
+
+        <div class="Analysis ">
+          <label for="Analysis" >
+            <span class ="list-span " [class.selected]="selectedItem === 'Analysis'" 
+            (click)="selectItem('Analysis')" >Analysis</span>
           </label>
         </div>
-
-
+  
         <div *ngIf="global.user_role == 'admin'" class=" dropdown">
           <label  class=" dropdown-toggle  " type="button"
                  data-bs-toggle="dropdown" aria-expanded="false">
-            <span >Management</span>
+            <span class ="list-span " [class.selected]="selectedItem === 'Management'" 
+            (click)="selectItem('Management')">Management</span>
           </label>
-          <ul class="dropdown-menu bg-secondary fs-6">
-            <li><label for="add" class="add">
-              <span>Add</span></label></li>
+          <ul class="dropdown-menu fs-6" 
+           style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px);">
+            <li><label for="add" class="add ">
+              <span class ="list-span"  [class.selected]="selectedItem === 'Add'" 
+            (click)="selectItem('Add')">Add</span></label></li>
 
             <li><label for="delete" class="delete">
-              <span>Delete</span></label></li>
+              <span class ="list-span"  [class.selected]="selectedItem === 'delete'" 
+              (click)="selectItem('delete')">Delete</span></label></li>
 
             <li><label for="log" class="log">
-              <span>Log</span></label></li>
+              <span class ="list-span"  [class.selected]="selectedItem === 'log'" 
+              (click)="selectItem('log')">Log</span></label></li>
           </ul>
         </div>
     
@@ -89,13 +98,15 @@
 
       <div class="text-content col-md-8">
 
-        <div class="home text">
+        <div class="home text" style="margin-top: 15px;background: rgba(f, f, f, 0.8); backdrop-filter: blur(2px);">
           <div class="title"> 
-           <i class="fa-solid fa-screwdriver-wrench"></i>
+           <i class="fa-solid fa-screwdriver-wrench " style="margin-left: 45%;"> </i>
           </div>
-          <h4>The Telemetry Subsystem is responsible for monitoring
-             and transmitting critical satellite data. It ensures system health, enables
-              diagnostics, and supports ground-based analysis and control.</h4>
+          <h4>    <br>Telemetry is the process of collecting data from a spacecraft and transmitting it back to Earth for monitoring and analysis. 
+            This data can include information about the spacecraft’s position, speed, temperature, battery levels, and the health of various onboard systems. 
+            Telemetry allows mission controllers to track the performance of the spacecraft in real-time and respond quickly to any anomalies. 
+            Without telemetry, it would be impossible to ensure the success and safety of space missions over long distances.
+          </h4>
          </div>
  
  
@@ -223,7 +234,7 @@
                  style="   background: rgba(255, 255, 255, 0.1);
                  backdrop-filter: blur(8px);
                  border-color: transparent;"
-                  [(ngModel)]="logName" (keyup)="filterLogs()" placeholder="Search by Name">
+                  [(ngModel)]="logName"  (keyup)="filterLogs()" placeholder="Search by Name">
                </div>
              </div>
            </div>
@@ -472,22 +483,26 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <div class="text Analysis">
+        <div class="title ">
+          <h1>Telemetry Dashboard</h1>
+        </div>
+        
+          <!-- Tabs or Navigation if needed -->
+        
+          <div id="charts-container">
+            <canvas id="thermalLineChart"></canvas>
+            <canvas id="telemetryRadar"></canvas>
+            <canvas id="batteryLine"></canvas>
+            <canvas id="payloadBar"></canvas>
+            <canvas id="obcUsageLine"></canvas>
+            <canvas id="gpsAltitudeVelocity"></canvas>
+            <canvas id="systemStatusPie"></canvas>
+            <canvas id="signalStrengthLine"></canvas>
+            <canvas id="latencyBar"></canvas>
+          </div>
+        </div>
+     
 
       </div>
     </div>

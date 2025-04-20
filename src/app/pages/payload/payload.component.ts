@@ -125,4 +125,11 @@ export class PayloadComponent {
     );
   }
 
+  selectedItem: string = ''; 
+
+  selectItem(item: string) {
+    this.selectedItem = item;
+  }
+  
+
 }

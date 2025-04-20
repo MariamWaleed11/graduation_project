@@ -8,7 +8,7 @@
 .Control-continar {
   padding: 50px 40px;
   height:100vh;
-  background: url('/images/3.jpg') no-repeat center center fixed;
+  background: url('/images/subsystems3.jpg') no-repeat center center fixed;
   background-size: cover;
   overflow-y: auto;
 }
@@ -16,8 +16,9 @@
 .topic {
   font-size: 45px;
   font-weight: 500;
-  margin: 120px 0 10px;
-  color: rgba(255, 255, 255, 0.7);
+  margin: 80px 0 30px;
+  color: rgba(255, 255, 255, 0.839);
+ 
 }
 
 
@@ -64,6 +65,8 @@
   
 }
 
+
+
 .text-content {
   width: 70%;
   color: rgba(255, 255, 255, 0.8);
@@ -78,7 +81,7 @@
 }
 
 .text .title {
-  font-size: 50px;
+  font-size: 40px;
   margin-bottom: 15px;
   color: #dfebf5;
 }
@@ -93,23 +96,25 @@
 #thermal:checked ~ .text-content .thermal,
 #payload:checked ~ .text-content .payload,
 #OBC:checked ~ .text-content .OBC,
-#GPS:checked ~ .text-content .GPS {
+#GPS:checked ~ .text-content .GPS,
+#Analysis:checked ~ .text-content .Analysis {
   display: block;
 }
 
 
-#add:checked ~ .list label.add,
-#log:checked ~ .list label.log,
-#delete:checked ~ .list label.delete,
-#power:checked ~ .list label.power,
-#telemtry:checked ~ .text-content .telemetry,
+/* #add:checked ~ .text-content .add,
+#log:checked ~ .text-content .log,
+#delete:checked ~ .text-content .delete,
+#power:checked ~ .text-content .power,
+#telemetry:checked ~ .text-content .telemetry,
 #communications:checked ~ .text-content .communications,
 #thermal:checked ~ .text-content .thermal,
 #payload:checked ~ .text-content .payload,
 #OBC:checked ~ .text-content .OBC,
-#GPS:checked ~ .text-content .GPS{
-  color: #22272C;
-}
+#GPS:checked ~ .text-content .GPS :hover{
+ color: #000;
+ 
+} */
 
 
 .btn {
@@ -169,7 +174,7 @@
   background-color: darkred;
 }
 
-/* General styling for labels */
+
 .custom-label {
   display: block;
   margin-bottom: 6px;
@@ -180,10 +185,10 @@
   letter-spacing: 0.5px;
 }
 
-/* Floating Label Style */
+
 .floating-label-group {
   position: relative;
-  margin-bottom: 15px; /* Control the vertical distance between inputs */
+  margin-bottom: 15px; 
 }
 
 .floating-label-group input,
@@ -192,19 +197,19 @@
   padding-bottom: 10px;
 }
 
-/* Floating label inside input/select */
+
 .floating-label {
   position: absolute;
   top: 10px;
   left: 12px;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   pointer-events: none;
   transition: 0.2s ease all;
   letter-spacing: 0.5px;
 }
 
-/* When input/select is focused or contains value, the label moves */
+
 .floating-label-group input:focus ~ .floating-label,
 .floating-label-group select:focus ~ .floating-label,
 .floating-label-group input:not(:placeholder-shown) ~ .floating-label,
@@ -217,13 +222,13 @@
   padding: 0 4px;
 }
 
-/* Error messages styling */
+
 .text-danger {
   font-size: 0.8rem;
-  margin-top: 5px; /* Add some spacing before error messages */
+  margin-top: 5px; 
 }
 
-/* Form Styling */
+
 .form-control,
 .form-select {
   background-color: rgba(255, 255, 255, 0.1);
@@ -242,7 +247,7 @@
   outline: none;
 }
 
-/* Submit button styling */
+
 .btn {
   color: white;
   border: none;
@@ -266,7 +271,7 @@
   background-color: darkred;
 }
 
-/* Adjust margins and padding for the overall layout */
+
 .form-group {
   margin-bottom: 20px;
 }
@@ -281,5 +286,17 @@
   margin-left: 0;
 }
 
+/* option {
+  background-color: rgba(20, 20, 20, 0.9); 
+  color: white;
+  font-size: 1rem;
+  padding: 5px;
+} */
+
+
+option[selected] {
+  color: #88eff0;
+  font-weight: bold;
+}
 
 

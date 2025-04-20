@@ -128,7 +128,7 @@ export class ControlComponent {
 
 
 
-  selectedItem: string = 'Receive'; 
+  selectedItem: string = ''; 
 
   selectItem(item: string) {
     this.selectedItem = item;

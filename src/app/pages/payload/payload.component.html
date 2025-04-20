@@ -2,98 +2,123 @@
   <div class="row  ">
     <div class="topic">Payload</div>
     <div  class="content ">
+      <input type="radio" name="slider" checked id="home" style="display: none;">
       <input type="radio" name="slider" id="add" style="display: none;">
       <input type="radio" name="slider" id="log" style="display: none;">
       <input type="radio" name="slider" id="delete" style="display: none;">
+
       
-      <div *ngIf="global.user_role == 'admin'" class="list col-md-3 ">
-        <div class=" dropdown">
-          <label for="" class=" management dropdown-toggle " type="button"
-                 data-bs-toggle="dropdown" aria-expanded="false">
-            <span>Management</span>
-          </label>
-          <ul class="dropdown-menu bg-secondary fs-6">
-            <i><label for="add" class="add">
-              <span>Add</span></label></i>
+      <div class="list col-md-3 ">
+      <div *ngIf="global.user_role == 'admin'" class=" dropdown">
+        <label  class=" dropdown-toggle  " type="button"
+               data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="list-span"  [class.selected]="selectedItem === 'Management'" 
+          (click)="selectItem('Management')">Management</span>
+        </label>
+        <ul class="dropdown-menu fs-6 "
+        style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); ">
+          <li><label for="add" class="add">
+            <span >Add</span></label></li>
 
-            <i><label for="delete" class="delete">
-              <span>Delete</span></label></i>
+          <li><label for="delete" class="delete">
+            <span >Delete</span></label></li>
 
-            <i><label for="log" class="log">
-              <span>Log</span></label></i>
-          </ul>
-        </div>
+          <li><label for="log" class="log">
+            <span >Log</span></label></li>
+        </ul>
+      </div>
         <div class="slider"></div>
       </div>
 
 
       <div class="text-content col-md-8">
-        <div class="add text ">
-          <div class="title "> Add User</div>
 
+        <div class="home text  "style="margin-top: 15px ;background: rgba(f, f, f, 0.8); backdrop-filter: blur(2px);">
+          <div class="title"> 
+           <i class="fa-solid fa-camera-retro" style="margin-left: 45%;"></i>
+          </div>
+          <h4> <br>Payload refers to the part of the spacecraft or rocket that carries the primary purpose of the mission. 
+            This can include satellites, scientific instruments, telescopes, or even astronauts. 
+            Unlike other parts of the rocket responsible for propulsion and control, the payload is the valuable cargo intended to operate in space. 
+            It is the reason the entire launch takes place, making it a central element in the success of space missions.
+         </h4>
+         </div>
+
+
+         <div class="add text">
+          <div class="title">Add User</div>
+        
           <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()"
-                class="p-4 border rounded shadow-m bg-secondary">
+                class="p-4 border rounded shadow-m"
+                style="background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);">
             <div class="row">
-              <div class="mb-3 col-md-4">
-                <label for="name" class="form-label text-white fs-4">Name</label>
-                <input type="text" id="name" class="form-control" formControlName="name"
-                       placeholder="Enter your name" required/>
-                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('name')?.invalid">
-        <span *ngIf="loginForm.get('name')?.errors?.['required']">Name is required</span>
-      </span>
+              
+              <!-- Name Field -->
+              <div class="mb-4 col-md-4 me-2 form-group floating-label-group">
+                <input type="text" id="name" class="form-control" formControlName="name" placeholder=" " required />
+                <label for="name" class="floating-label ps-3 ">Name</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('name')?.invalid">
+                  Name is required
+                </div>
               </div>
-
-              <div class="mb-3 col-md-4">
-                <label for="email" class="form-label text-white fs-4">Email</label>
-                <input type="email" id="email" class="form-control" formControlName="email"
-                       placeholder="Enter your email" required/>
-                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('email')?.invalid">
-        <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
-        <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email</span>
-      </span>
+        
+              <!-- Email Field -->
+              <div class="mb-4 col-md-4 form-group floating-label-group">
+                <input type="email" id="email" class="form-control" formControlName="email" placeholder=" " required />
+                <label for="email" class="floating-label ps-3">Email</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('email')?.invalid">
+                  <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+                  <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email</span>
+                </div>
               </div>
-
-              <div class="mb-3 col-md-4">
-                <label for="role" class="form-label text-white fs-4">Role</label>
+        
+              <!-- Role Field -->
+              <div class="mb-3 col-md-3 me-1 form-group floating-label-group">
                 <select id="role" class="form-select" formControlName="role" required>
                   <option value="" disabled selected>Select User Role</option>
-                  <option value="admin" >Admin</option>
-                  <option value="user" >User</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
                 </select>
-                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('role')?.invalid">
-        <span *ngIf="loginForm.get('role')?.errors?.['required']">Role is required</span>
-      </span>
+                <label for="role" class="floating-label">Role</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('role')?.invalid">
+                  Role is required
+                </div>
               </div>
-
-              <div class="mb-3 col-md-6">
-                <label for="password" class="form-label text-white fs-4">Password</label>
-                <input type="password" class="form-control" formControlName="password"
-                       id="password" placeholder="Enter your password" required/>
-                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('password')?.invalid">
-        <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
-        <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</span>
-      </span>
+        
+              <!-- Password Field -->
+              <div class="mb-3 col-md-4 me-1 form-group floating-label-group">
+                <input type="password" class="form-control" formControlName="password" id="password" placeholder=" " required />
+                <label for="password" class="floating-label ps-3">Password</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('password')?.invalid">
+                  <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+                  <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</span>
+                </div>
               </div>
-
-              <div class="mb-3 col-md-6">
-                <label for="password_confirmation" class="form-label text-white fs-4">Confirm Password</label>
-                <input type="password" class="form-control" formControlName="password_confirmation"
-                       id="password_confirmation" placeholder="Confirm your password" required/>
-                <span class="text-danger" *ngIf="isSubmitted && loginForm.get('password_confirmation')?.invalid">
-        <span *ngIf="loginForm.get('password_confirmation')?.errors?.['required']">Confirm password is required</span>
-        <span *ngIf="loginForm.hasError('passwordMismatch')">Passwords do not match</span>
-      </span>
+        
+              <!-- Confirm Password Field -->
+              <div class="mb-3 col-md-4 form-group floating-label-group">
+                <input type="password" class="form-control" formControlName="password_confirmation" id="password_confirmation" placeholder=" " required />
+                <label for="password_confirmation" class="floating-label ps-3">Confirm Password</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('password_confirmation')?.invalid">
+                  <span *ngIf="loginForm.get('password_confirmation')?.errors?.['required']">Confirm password is required</span>
+                  <span *ngIf="loginForm.hasError('passwordMismatch')">Passwords do not match</span>
+                </div>
               </div>
-
+        
+              <!-- Submit Button -->
               <div>
-                <button type="submit" class="btn btn-dark w-25 fs-4 mt-4">Add</button>
+                <button type="submit" class="btn btn-danger w-25 fs-4 mt-4 ">Add</button>
               </div>
             </div>
           </form>
         </div>
+        
+      
+
         <div class=" text delete ">
           <div class="title" style="margin-left: 50px;">Delete User</div>
-          <table class="table table-dark table-striped">
+          <div class="table-container">
+          <table class="table table-bordered custom-table">
             <thead>
             <tr>
               <th>ID</th>
@@ -110,34 +135,46 @@
               <td>{{ user.email }}</td>
               <td>{{ user.role }}</td>
               <td>
-                <button class="btn btn-danger" (click)="deleteUser(user.id)">Delete</button>
+                <button class="btn btn-danger me-5 w-50" (click)="deleteUser(user.id)">Delete</button>
               </td>
             </tr>
 
 
             </tbody>
           </table>
+          </div>
 
         </div>
+
+
         <div class="log text ">
 
-          <div class="title">User Logs</div>
+          <div class="title"> User Logs</div>
           <div class="container  d-flex">
             <div class="row ">
               <div class="col-md-5 me-4 ">
                 <!-- Date Input -->
-                <input type="date" class="form-control mb-1 fs-4  ms-0 " [(ngModel)]="logDate" (change)="filterLogs()"
-                       placeholder="Select Date">
+                <input type="date"  [(ngModel)]="logDate" (change)="filterLogs()" 
+                 class="form-control mb-1 fs-4  ms-0 "
+                style=" background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(8px);
+                border-color: transparent;"
+              placeholder="Select Date">
               </div>
+
               <div class="col-md-5" style="margin-right: 5px;">
                 <!-- Name Search Input -->
-                <input type="text" class="form-control mb-1 fs-4 ms-0 " [(ngModel)]="logName" (keyup)="filterLogs()"
-                       placeholder="Search by Name">
+                <input type="text" class="form-control mb-1 fs-4 ms-0 "
+                style="   background: rgba(255, 255, 255, 0.1);
+                backdrop-filter: blur(8px);
+                border-color: transparent;"
+                 [(ngModel)]="logName" (keyup)="filterLogs()" placeholder="Search by Name">
               </div>
             </div>
           </div>
           <!-- User Logs Table -->
-          <table class="table table-dark table-striped mt-3">
+          <div class="table-container">
+          <table class="table table-bordered custom-table">
             <thead>
             <tr>
               <th>ID</th>
@@ -155,11 +192,12 @@
             </tr>
             </tbody>
           </table>
+          </div>
         </div>
+
       </div>
     </div>
   </div>
-</div>
 
 
 

@@ -15,6 +15,12 @@ import {FooterComponent} from './shared/footer/footer.component';
 import {LoginComponent} from './auth/login/login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
+import { NgChartsConfiguration, provideCharts } from 'ng2-charts';
+
+
+
+
+
 
 
 
@@ -28,19 +34,25 @@ import {AuthInterceptor} from './interceptors/auth.interceptor';
     PayloadComponent,
     NavbarComponent,
     FooterComponent,
+   
+   
     
 
 
 
 
   ],
-  imports: [
+  imports:[
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    FormsModule,
     ReactiveFormsModule,
     LoginComponent,
-    FormsModule
+   
+    
+  
+   
     
 
 
@@ -48,6 +60,7 @@ import {AuthInterceptor} from './interceptors/auth.interceptor';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor , multi: true },
+    provideCharts()
   ],
   bootstrap: [AppComponent]
 })

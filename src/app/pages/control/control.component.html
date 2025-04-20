@@ -23,8 +23,9 @@
             <span class ="list-span " [class.selected]="selectedItem === 'Receive'" 
             (click)="selectItem('Receive')" >Receive</span>
           </label>
-          <ul class="dropdown-menu bg-secondary fs-6">
-            <li><label for="new" class="new">
+          <ul class="dropdown-menu  fs-6" 
+            style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); ">
+            <li><label for="new" class="new " >
               <span >New plan</span></label></li>
 
            
@@ -53,7 +54,8 @@
             <span class="list-span"  [class.selected]="selectedItem === 'Management'" 
             (click)="selectItem('Management')">Management</span>
           </label>
-          <ul class="dropdown-menu bg-secondary fs-6">
+          <ul class="dropdown-menu fs-6 "
+          style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(8px); ">
             <li><label for="add" class="add">
               <span >Add</span></label></li>
 
@@ -70,86 +72,88 @@
 
       <div class="text-content col-md-8">
 
-        <div class="home text">
+        <div class="home text  "style="margin-top: 15px ;background: rgba(f, f, f, 0.8); backdrop-filter: blur(2px);">
          <div class="title"> 
-          <i class="fa-solid fa-screwdriver-wrench"></i>
+          <i class="fa-solid fa-screwdriver-wrench"style="margin-left: 45%;"></i>
          </div>
-         <h4>The Control Subsystem manages satellite orientation, stability,
-           and positioning. It utilizes sensors, onboard computers, and actuators to ensure 
-           precise navigation and mission execution.</h4>
+         <h4> <br> Control Subsystem is a critical component responsible for managing the orientation, position, and stability of a spacecraft.
+          One of the most important types is the <em>Attitude Control Subsystem (ACS)</em>, which ensures the spacecraft is properly aligned for communication, navigation, and scientific measurements.
+          This subsystem uses sensors (like gyroscopes and star trackers) to determine the spacecraft’s position and actuators (such as thrusters or reaction wheels) to adjust its orientation.
+          By continuously monitoring and adjusting the spacecraft’s movement, the control subsystem plays a vital role in mission success and long-term space operations.
+        </h4>
         </div>
 
         
 
-
-       <div class="add text">
-        <div class="title">Add User</div>
-      
-        <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()"
-              class="p-4 border rounded shadow-m"
-              style="background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);">
-          <div class="row">
-            
-            <!-- Name Field -->
-            <div class="mb-3 col-md-4 me-2 form-group floating-label-group">
-              <input type="text" id="name" class="form-control" formControlName="name" placeholder=" " required />
-              <label for="name" class="floating-label">Name</label>
-              <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('name')?.invalid">
-                Name is required
+ 
+        <div class="add text">
+          <div class="title">Add User</div>
+        
+          <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()"
+                class="p-4 border rounded shadow-m"
+                style="background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px);">
+            <div class="row">
+              
+              <!-- Name Field -->
+              <div class="mb-4 col-md-4 me-2 form-group floating-label-group">
+                <input type="text" id="name" class="form-control" formControlName="name" placeholder=" " required />
+                <label for="name" class="floating-label ps-3 ">Name</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('name')?.invalid">
+                  Name is required
+                </div>
+              </div>
+        
+              <!-- Email Field -->
+              <div class="mb-4 col-md-4 form-group floating-label-group">
+                <input type="email" id="email" class="form-control" formControlName="email" placeholder=" " required />
+                <label for="email" class="floating-label ps-3">Email</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('email')?.invalid">
+                  <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+                  <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email</span>
+                </div>
+              </div>
+        
+              <!-- Role Field -->
+              <div class="mb-3 col-md-3 me-1 form-group floating-label-group">
+                <select id="role" class="form-select" formControlName="role" required>
+                  <option value="" disabled selected>Select User Role</option>
+                  <option value="admin">Admin</option>
+                  <option value="user">User</option>
+                </select>
+                <label for="role" class="floating-label">Role</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('role')?.invalid">
+                  Role is required
+                </div>
+              </div>
+        
+              <!-- Password Field -->
+              <div class="mb-3 col-md-4 me-1 form-group floating-label-group">
+                <input type="password" class="form-control" formControlName="password" id="password" placeholder=" " required />
+                <label for="password" class="floating-label ps-3">Password</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('password')?.invalid">
+                  <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+                  <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</span>
+                </div>
+              </div>
+        
+              <!-- Confirm Password Field -->
+              <div class="mb-3 col-md-4 form-group floating-label-group">
+                <input type="password" class="form-control" formControlName="password_confirmation" id="password_confirmation" placeholder=" " required />
+                <label for="password_confirmation" class="floating-label ps-3">Confirm Password</label>
+                <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('password_confirmation')?.invalid">
+                  <span *ngIf="loginForm.get('password_confirmation')?.errors?.['required']">Confirm password is required</span>
+                  <span *ngIf="loginForm.hasError('passwordMismatch')">Passwords do not match</span>
+                </div>
+              </div>
+        
+              <!-- Submit Button -->
+              <div>
+                <button type="submit" class="btn btn-danger w-25 fs-4 mt-4 ">Add</button>
               </div>
             </div>
-      
-            <!-- Email Field -->
-            <div class="mb-3 col-md-4 form-group floating-label-group">
-              <input type="email" id="email" class="form-control" formControlName="email" placeholder=" " required />
-              <label for="email" class="floating-label ps-3">Email</label>
-              <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('email')?.invalid">
-                <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
-                <span *ngIf="loginForm.get('email')?.errors?.['email']">Enter a valid email</span>
-              </div>
-            </div>
-      
-            <!-- Role Field -->
-            <div class="mb-3 col-md-3 me-1 form-group floating-label-group">
-              <select id="role" class="form-select" formControlName="role" required>
-                <option value="" disabled selected>Select User Role</option>
-                <option value="admin">Admin</option>
-                <option value="user">User</option>
-              </select>
-              <label for="role" class="floating-label">Role</label>
-              <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('role')?.invalid">
-                Role is required
-              </div>
-            </div>
-      
-            <!-- Password Field -->
-            <div class="mb-3 col-md-4 me-1 form-group floating-label-group">
-              <input type="password" class="form-control" formControlName="password" id="password" placeholder=" " required />
-              <label for="password" class="floating-label">Password</label>
-              <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('password')?.invalid">
-                <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
-                <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 8 characters</span>
-              </div>
-            </div>
-      
-            <!-- Confirm Password Field -->
-            <div class="mb-3 col-md-4 form-group floating-label-group">
-              <input type="password" class="form-control" formControlName="password_confirmation" id="password_confirmation" placeholder=" " required />
-              <label for="password_confirmation" class="floating-label ps-3">Confirm Password</label>
-              <div class="text-danger small" *ngIf="isSubmitted && loginForm.get('password_confirmation')?.invalid">
-                <span *ngIf="loginForm.get('password_confirmation')?.errors?.['required']">Confirm password is required</span>
-                <span *ngIf="loginForm.hasError('passwordMismatch')">Passwords do not match</span>
-              </div>
-            </div>
-      
-            <!-- Submit Button -->
-            <div>
-              <button type="submit" class="btn btn-danger w-25 fs-4 mt-4 ">Add</button>
-            </div>
-          </div>
-        </form>
-      </div>
-      
+          </form>
+        </div>
+        
       
 
         <div class=" text delete ">
@@ -238,8 +242,8 @@
           <div class="title">Preparation</div>
           <div class="container  d-flex">
             <div class="row justify-content-between">
-              <div class="col-md-6 ">
-                <select class="form-select form-select-lg text-light"
+              <div class="col-md-4 w-50  ">
+                <select class="form-select form-select-lg text-light h-100"
                  aria-label="Default select example" >
                   <option selected >Subsystem</option>
                   <option value="1">Power</option>
@@ -247,13 +251,20 @@
                   <option value="3">Communication</option>
                   <option value="4">Thermal</option>
                   <option value="5">Payload</option>
-                  <option value="6">OBC</option>
+                  <option value="6">OBC</option> 
                 </select>
               </div>
-              <div class="col-md-3 w-50" >
+              <div class="col-md-3 ">
+                <select class="form-select form-select-lg text-light h-100 "
+                 aria-label="Default select example" >
+                  <option selected >Time</option>
+                  <option value="1">Real</option>
+                  <option value="2">Tag</option>
+                 
+                </select>
+              </div>
+              <div class="col-md-3 " >
                 <button type="button" class="btn btn-danger h-100 fs-4">Command</button>
-              
-               
               </div>
             </div>
           </div>
